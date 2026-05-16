@@ -155,6 +155,14 @@ function canvasSize() {
   return { width: rect.width, height: rect.height };
 }
 
+function scaledModelUnit() {
+  const { width } = canvasSize();
+  if (width <= 360) return gridSize * 1.35;
+  if (width <= 430) return gridSize * 1.55;
+  if (width <= 680) return gridSize * 1.75;
+  return modelUnit;
+}
+
 function origin() {
   const { width, height } = canvasSize();
   return {
@@ -165,12 +173,14 @@ function origin() {
 
 function toScreen(point) {
   const o = origin();
-  return { x: o.x + point.x * modelUnit, y: o.y + point.y * modelUnit };
+  const unit = scaledModelUnit();
+  return { x: o.x + point.x * unit, y: o.y + point.y * unit };
 }
 
 function toModel(point) {
   const o = origin();
-  return { x: (point.x - o.x) / modelUnit, y: (point.y - o.y) / modelUnit };
+  const unit = scaledModelUnit();
+  return { x: (point.x - o.x) / unit, y: (point.y - o.y) / unit };
 }
 
 function snapModel(point) {
