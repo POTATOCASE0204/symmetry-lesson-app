@@ -127,6 +127,7 @@ const state = {
   emphasize: true,
   showAnswer: false,
   dragging: null,
+  pointerStart: null,
   guessLine: {
     p1: { x: 0, y: -4 },
     p2: { x: 0, y: 4 },
@@ -495,6 +496,25 @@ function updateDrag(pointer) {
   draw();
 }
 
+function moveGuessTo(pointer) {
+  const model = clampModel(snapModel(toModel(pointer)));
+
+  if (state.mode === "line") {
+    const mid = {
+      x: (state.guessLine.p1.x + state.guessLine.p2.x) / 2,
+      y: (state.guessLine.p1.y + state.guessLine.p2.y) / 2,
+    };
+    const dx = model.x - mid.x;
+    const dy = model.y - mid.y;
+    state.guessLine.p1 = clampModel(snapModel({ x: state.guessLine.p1.x + dx, y: state.guessLine.p1.y + dy }));
+    state.guessLine.p2 = clampModel(snapModel({ x: state.guessLine.p2.x + dx, y: state.guessLine.p2.y + dy }));
+  } else {
+    state.guessCenter = model;
+  }
+
+  draw();
+}
+
 function clampModel(point) {
   return {
     x: Math.min(Math.max(point.x, -5), 5),
@@ -594,7 +614,9 @@ function renderShapeButtons() {
 }
 
 canvas.addEventListener("pointerdown", (event) => {
-  const target = hitTest(getPointer(event));
+  const pointer = getPointer(event);
+  const target = hitTest(pointer);
+  state.pointerStart = pointer;
   if (!target) return;
   if (target.start) target.start = snapModel(target.start);
   state.dragging = target;
@@ -607,12 +629,19 @@ canvas.addEventListener("pointermove", (event) => {
 });
 
 canvas.addEventListener("pointerup", (event) => {
+  const pointer = getPointer(event);
+  const moved = state.pointerStart && distance(pointer, state.pointerStart) > 6;
+  if (!state.dragging && !moved) {
+    moveGuessTo(pointer);
+  }
   state.dragging = null;
+  state.pointerStart = null;
   canvas.releasePointerCapture(event.pointerId);
 });
 
 canvas.addEventListener("pointercancel", () => {
   state.dragging = null;
+  state.pointerStart = null;
 });
 
 ui.tabs.forEach((tab) => {
