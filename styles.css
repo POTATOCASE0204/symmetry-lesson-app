@@ -386,29 +386,126 @@ h2 {
 @media (max-width: 680px) {
   .app-shell {
     padding: 10px;
+    gap: 10px;
   }
 
   .topbar {
     align-items: stretch;
     flex-direction: column;
+    gap: 12px;
+    padding: 14px;
   }
 
   .top-actions {
     align-items: stretch;
     flex-direction: column;
+    gap: 10px;
   }
 
   .mode-tabs {
     min-width: 0;
   }
 
+  h1 {
+    font-size: 1.35rem;
+    line-height: 1.25;
+  }
+
+  .stage-wrap {
+    height: min(72vh, 560px);
+    min-height: 420px;
+  }
+
+  .stage-hint {
+    right: 10px;
+    bottom: 10px;
+    max-width: calc(100% - 20px);
+    font-size: 0.78rem;
+  }
+
   .control-panel {
     grid-template-columns: 1fr;
+    padding: 14px;
   }
 
   .panel-section {
     border-right: 0;
     border-bottom: 1px solid var(--line);
     padding-right: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .app-shell {
+    padding: 6px;
+  }
+
+  .workspace,
+  .control-panel {
+    border-radius: 6px;
+  }
+
+  .topbar {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 1.18rem;
+  }
+
+  .eyebrow {
+    font-size: 0.76rem;
+  }
+
+  .tab,
+  .tool-button,
+  .wide-button,
+  .help-button,
+  .shape-list button {
+    min-height: 40px;
+    font-size: 0.92rem;
+  }
+
+  .stage-wrap {
+    height: 68vh;
+    min-height: 360px;
+  }
+
+  .switch {
+    min-height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback {
+    min-height: 0;
+    font-size: 0.92rem;
+  }
+
+  .help-dialog {
+    width: calc(100vw - 16px);
+  }
+
+  .help-head {
+    padding: 14px;
+  }
+
+  .help-content {
+    padding: 14px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 360px) {
+  .stage-wrap {
+    height: 64vh;
+    min-height: 320px;
+  }
+
+  h1 {
+    font-size: 1.08rem;
   }
 }
