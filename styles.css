@@ -1,0 +1,414 @@
+:root {
+  color-scheme: light;
+  --ink: #15202b;
+  --muted: #5d6b7a;
+  --paper: #f8faf7;
+  --panel: #ffffff;
+  --line: #d6ded8;
+  --grid: rgba(55, 97, 120, 0.16);
+  --grid-strong: rgba(55, 97, 120, 0.28);
+  --blue: #2176ae;
+  --blue-dark: #155a86;
+  --rose: #d94f70;
+  --rose-dark: #a93652;
+  --green: #2f855a;
+  --gold: #d7971e;
+  --shadow: 0 20px 55px rgba(31, 45, 61, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(120deg, rgba(33, 118, 174, 0.08), rgba(47, 133, 90, 0.08)),
+    var(--paper);
+  color: var(--ink);
+  font-family:
+    "Yu Gothic UI",
+    "Hiragino Sans",
+    "Meiryo",
+    system-ui,
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.workspace,
+.control-panel {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(21, 32, 43, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.workspace {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--green);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.45rem, 2.2vw, 2.35rem);
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 12px;
+  font-size: 1.04rem;
+}
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 230px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #eef4f1;
+}
+
+.tab,
+.tool-button,
+.wide-button,
+.help-button,
+.icon-button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.help-button {
+  padding: 0 16px;
+  background: #fff8e6;
+  color: #8a5a00;
+  border: 1px solid #efd18d;
+}
+
+.tab {
+  background: transparent;
+  color: var(--muted);
+}
+
+.tab.is-active {
+  background: var(--blue);
+  color: #fff;
+}
+
+.stage-wrap {
+  position: relative;
+  min-height: 0;
+  background: #fbfdfb;
+}
+
+#symmetryCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+#symmetryCanvas:active {
+  cursor: grabbing;
+}
+
+.stage-hint {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 8px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.panel-section {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+}
+
+.panel-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.switch input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--blue);
+}
+
+.button-grid,
+.shape-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.shape-list {
+  grid-template-columns: 1fr;
+}
+
+.tool-button {
+  background: #edf3f6;
+  color: var(--blue-dark);
+}
+
+.tool-button[aria-pressed="true"],
+.shape-list button[aria-pressed="true"] {
+  background: var(--green);
+  color: #fff;
+}
+
+.shape-list button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: #edf3f6;
+  color: var(--blue-dark);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.wide-button {
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+}
+
+.lesson-note {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.feedback {
+  min-height: 54px;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 4px solid var(--gold);
+  background: #fff8e6;
+  color: var(--ink);
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.lesson-note h2 {
+  color: var(--ink);
+}
+
+.legend p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.help-dialog {
+  width: min(720px, calc(100vw - 32px));
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(21, 32, 43, 0.28);
+}
+
+.help-dialog::backdrop {
+  background: rgba(21, 32, 43, 0.35);
+}
+
+.help-card {
+  background: #fff;
+}
+
+.help-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.help-head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.icon-button {
+  width: 44px;
+  background: #edf3f6;
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.help-content {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+  line-height: 1.8;
+}
+
+.help-content h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.help-content p,
+.help-content ol {
+  margin: 0;
+  color: var(--muted);
+}
+
+.help-content ol {
+  padding-left: 1.4em;
+}
+
+.swatch {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.swatch.original {
+  background: var(--blue);
+}
+
+.swatch.mirror {
+  background: var(--rose);
+}
+
+.swatch.guide {
+  background: var(--gold);
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .control-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel-section {
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    padding-right: 14px;
+  }
+
+  .panel-section:nth-child(even) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    padding: 10px;
+  }
+
+  .topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .top-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mode-tabs {
+    min-width: 0;
+  }
+
+  .control-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-section {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-right: 0;
+  }
+}
